@@ -1,19 +1,11 @@
 import { Component } from "@angular/core"
+import { HeaderComponent } from "./components/header.component"
 
 @Component({
   selector: "app-root",
   standalone: true,
-  imports: [],
-  template: `
-    <header>
-      <img
-        src="assets/angular-logo.png"
-        alt="The Angular logo: The letter 'A'"
-      />
-      <h1>Let's get started!</h1>
-      <p>Time to learn all about Angular!</p>
-    </header>
-  `,
+  imports: [HeaderComponent],
+  template: ` <app-header></app-header> `,
   styles: `
     header {
       margin: 3rem auto;

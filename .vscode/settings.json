@@ -3,5 +3,8 @@
   "editor.formatOnSave": true,
   "prettier.semi": false,
   "prettier.singleQuote": false,
-  "prettier.trailingComma": "es5"
+  "prettier.trailingComma": "es5",
+  "[css]": {
+    "editor.formatOnSave": true
+  }
 }

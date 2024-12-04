@@ -6,23 +6,6 @@ import { HeaderComponent } from "./components/header.component"
   standalone: true,
   imports: [HeaderComponent],
   template: ` <app-header></app-header> `,
-  styles: `
-    header {
-      margin: 3rem auto;
-      text-align: center;
-    }
-
-    img {
-      width: 8rem;
-    }
-
-    h1 {
-      margin: 1rem auto;
-      background: -webkit-linear-gradient(45deg, #f9096d, #b700ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-size: 3rem;
-    }
-  `,
+  styles: ``,
 })
 export class AppComponent {}

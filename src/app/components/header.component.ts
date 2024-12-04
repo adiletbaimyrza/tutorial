@@ -6,7 +6,11 @@ import { Component } from "@angular/core"
   imports: [],
   template: `
     <header>
-      <h1>EasyTask</h1>
+      <img src="assets/task-management-logo.png" alt="A todo list" />
+      <div>
+        <h1>EasyTask</h1>
+        <p>Enterprise-level task management without friction</p>
+      </div>
     </header>
   `,
   styles: `

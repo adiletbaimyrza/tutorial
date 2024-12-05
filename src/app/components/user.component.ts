@@ -1,4 +1,5 @@
-import { Component } from "@angular/core"
+import { Component, Input, Output, EventEmitter } from "@angular/core"
+import { TUser } from "./types"
 
 @Component({
   selector: "app-user",
@@ -6,9 +7,9 @@ import { Component } from "@angular/core"
   imports: [],
   template: `
     <div>
-      <button>
-        <img src="" />
-        <span>NAME</span>
+      <button (click)="onSelectUser()">
+        <img [src]="user.avatar" [alt]="user.name" />
+        <span>{{ user.name }}</span>
       </button>
     </div>
   `,
@@ -58,4 +59,11 @@ import { Component } from "@angular/core"
     `,
   ],
 })
-export class UserComponent {}
+export class UserComponent {
+  @Input({ required: true }) user!: TUser
+  @Output() select = new EventEmitter()
+
+  onSelectUser() {
+    this.select.emit(this.user.id)
+  }
+}

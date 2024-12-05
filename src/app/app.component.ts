@@ -1,11 +1,23 @@
 import { Component } from "@angular/core"
 import { HeaderComponent } from "./components/header.component"
+import { UserComponent } from "./components/user.component"
+import { TUser } from "./components/types"
+import { DUMMY_USERS } from "./components/dummy-users"
 
 @Component({
   selector: "app-root",
   standalone: true,
-  imports: [HeaderComponent],
-  template: ` <app-header></app-header> `,
+  imports: [HeaderComponent, UserComponent],
+  template: `
+    <app-header />
+    <main>
+      <ul id="users">
+        @for (user of users; track user.id) {
+        <app-user [user]="user" (select)="onSelectUser($event)" />
+        }
+      </ul>
+    </main>
+  `,
   styles: [
     `
       main {
@@ -51,4 +63,18 @@ import { HeaderComponent } from "./components/header.component"
     `,
   ],
 })
-export class AppComponent {}
+export class AppComponent {
+  users!: Array<TUser>
+
+  ngOnInit() {
+    const modifiedUsers = DUMMY_USERS.map((user) => ({
+      ...user,
+      avatar: `assets/users/${user.avatar}`,
+    }))
+    this.users = modifiedUsers
+  }
+
+  onSelectUser(id: string) {
+    console.log(`User with ${id} was clicked!`)
+  }
+}

@@ -17,7 +17,7 @@ import { NewtaskComponent } from "./new-task.component"
       </header>
 
       @if (isNewTaskVisible) {
-      <app-new-task (add)="onAddTask()" />
+      <app-new-task (add)="onAddTask()" (cancel)="onCancel()" />
       } @else if (tasks.length) {
       <ul>
         @for (task of tasks; track task.id) {
@@ -103,6 +103,7 @@ export class TasksCompnent {
   @Input({ required: true }) isNewTaskVisible!: boolean
   @Output() completeEventForwarded = new EventEmitter<string>()
   @Output() addForwarded = new EventEmitter()
+  @Output() cancelForwarded = new EventEmitter<void>()
 
   onCompleteTask(taskId: string) {
     this.completeEventForwarded.emit(taskId)
@@ -115,5 +116,9 @@ export class TasksCompnent {
   onAddTask() {
     this.addForwarded.emit()
     this.isNewTaskVisible = false
+  }
+
+  onCancel() {
+    this.cancelForwarded.emit()
   }
 }

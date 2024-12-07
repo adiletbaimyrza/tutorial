@@ -29,6 +29,7 @@ import { TUser, TTask } from "./components/types"
         (completeEventForwarded)="onCompleteTask($event)"
         (addForwarded)="onAddTask()"
         [isNewTaskVisible]="isNewTaskVisible"
+        (cancelForwarded)="onCancel()"
       />
 
       } @else {
@@ -109,6 +110,10 @@ export class AppComponent {
 
   onAddTask() {
     console.log("hello")
+  }
+
+  onCancel() {
+    this.isNewTaskVisible = false
   }
 
   onCompleteTask(taskId: string) {

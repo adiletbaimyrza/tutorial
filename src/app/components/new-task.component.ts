@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Output } from "@angular/core"
+import { TTask } from "./types"
 
 @Component({
   selector: "app-new-task",
   standalone: true,
-  template: `<div class="backdrop"></div>
+  template: `
+    <div class="backdrop" (click)="onCancel()"></div>
     <dialog open>
       <h2>Add Task</h2>
       <form>
@@ -23,11 +25,12 @@ import { Component, EventEmitter, Output } from "@angular/core"
         </p>
 
         <p class="actions">
-          <button type="button">Cancel</button>
+          <button type="button" (click)="onCancel()">Cancel</button>
           <button type="submit">Create</button>
         </p>
       </form>
-    </dialog> `,
+    </dialog>
+  `,
   styles: [
     `
       .backdrop {
@@ -121,9 +124,9 @@ import { Component, EventEmitter, Output } from "@angular/core"
   ],
 })
 export class NewtaskComponent {
-  @Output() add = new EventEmitter<void>()
+  @Output() cancel = new EventEmitter<void>()
 
-  logAndEmit() {
-    this.add.emit()
+  onCancel() {
+    this.cancel.emit()
   }
 }

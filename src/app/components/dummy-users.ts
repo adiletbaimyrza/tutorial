@@ -1,6 +1,4 @@
-import { TUser } from "./types"
-
-export const DUMMY_USERS: Array<TUser> = [
+export const DUMMY_USERS = [
   {
     id: "u1",
     name: "Jasmine Washington",

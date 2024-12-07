@@ -7,7 +7,7 @@ import { TUser } from "./types"
   imports: [],
   template: `
     <div>
-      <button (click)="onSelectUser()">
+      <button [class.active]="selected" (click)="onSelectUser()">
         <img [src]="user.avatar" [alt]="user.name" />
         <span>{{ user.name }}</span>
       </button>
@@ -61,7 +61,8 @@ import { TUser } from "./types"
 })
 export class UserComponent {
   @Input({ required: true }) user!: TUser
-  @Output() select = new EventEmitter()
+  @Input({ required: true }) selected!: boolean
+  @Output() select = new EventEmitter<string>()
 
   onSelectUser() {
     this.select.emit(this.user.id)

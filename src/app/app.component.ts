@@ -1,21 +1,39 @@
 import { Component } from "@angular/core"
 import { HeaderComponent } from "./components/header.component"
 import { UserComponent } from "./components/user.component"
-import { TUser } from "./components/types"
+import { TasksCompnent } from "./components/tasks.component"
 import { DUMMY_USERS } from "./components/dummy-users"
+import { DUMMY_TASKS } from "./components/dummy-tasks"
+import { TUser, TTask } from "./components/types"
 
 @Component({
   selector: "app-root",
   standalone: true,
-  imports: [HeaderComponent, UserComponent],
+  imports: [HeaderComponent, UserComponent, TasksCompnent],
   template: `
     <app-header />
     <main>
       <ul id="users">
         @for (user of users; track user.id) {
-        <app-user [user]="user" (select)="onSelectUser($event)" />
+        <app-user
+          [user]="user"
+          [selected]="user.id === currentUser?.id"
+          (select)="onSelectUser($event)"
+        />
         }
       </ul>
+      @if (currentUserTasks) {
+      <app-tasks
+        [tasks]="currentUserTasks"
+        [user]="currentUser"
+        (completeEventForwarded)="onCompleteTask($event)"
+        (addForwarded)="onAddTask()"
+        [isNewTaskVisible]="isNewTaskVisible"
+      />
+
+      } @else {
+      <h1>Select a user to see their tasks!</h1>
+      }
     </main>
   `,
   styles: [
@@ -64,17 +82,42 @@ import { DUMMY_USERS } from "./components/dummy-users"
   ],
 })
 export class AppComponent {
-  users!: Array<TUser>
+  users!: TUser[]
+  tasks!: TTask[]
+
+  currentUser?: TUser
+  currentUserTasks!: TTask[]
+  selected = false
+  isNewTaskVisible = false
 
   ngOnInit() {
     const modifiedUsers = DUMMY_USERS.map((user) => ({
       ...user,
       avatar: `assets/users/${user.avatar}`,
     }))
+
     this.users = modifiedUsers
+    this.tasks = DUMMY_TASKS
   }
 
-  onSelectUser(id: string) {
-    console.log(`User with ${id} was clicked!`)
+  onSelectUser(userId: string) {
+    this.currentUser = this.users.find((user) => user.id === userId)!
+    this.currentUserTasks = this.tasks.filter(
+      (task) => task.userId === this.currentUser?.id
+    )
+  }
+
+  onAddTask() {
+    console.log("hello")
+  }
+
+  onCompleteTask(taskId: string) {
+    this.tasks = this.tasks.filter((task) => task.id !== taskId)
+
+    if (this.currentUser) {
+      this.currentUserTasks = this.tasks.filter(
+        (task) => task.userId === this.currentUser?.id
+      )
+    }
   }
 }
